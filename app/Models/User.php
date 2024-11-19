@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Like;
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Connection;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -20,6 +24,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'bio',
+        'image',
         'password',
     ];
 
@@ -42,4 +48,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function posts(){
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+    public function likes(){
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+    public function s_connections(){
+        return $this->hasMany(Connection::class, 'user_id', 'id');
+    }
+    public function r_connections(){
+        return $this->hasMany(Connection::class, 'friend_id', 'id');
+    }
 }
