@@ -4,8 +4,8 @@
     <div class="container">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="fw-bold my-4 h4">
             <ol class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('site.home') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">login</li>
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('site.home') }}">Home ></a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">login</li>
             </ol>
         </nav>
         <div class="d-flex flex-column gap-3 account-form  mx-auto mt-5">

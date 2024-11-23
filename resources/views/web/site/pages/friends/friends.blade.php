@@ -23,41 +23,34 @@
 
         <!-- قائمة الأشخاص -->
         <div class="row">
-            <!-- مستخدم 1 -->
-            <div class="col-md-4 mb-4">
-                <div class="card bg-dark text-white">
-                    <div class="card-body text-center">
-                        <img src="https://via.placeholder.com/100" alt="User" class="rounded-circle mb-3"
-                            style="width: 100px; height: 100px;">
-                        <h5 class="card-title">John Doe</h5>
-                        <button class="btn btn-primary btn-sm">Send Friend Request</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- مستخدم 2 -->
-            <div class="col-md-4 mb-4">
-                <div class="card bg-dark text-white">
-                    <div class="card-body text-center">
-                        <img src="https://via.placeholder.com/100" alt="User" class="rounded-circle mb-3"
-                            style="width: 100px; height: 100px;">
-                        <h5 class="card-title">Jane Smith</h5>
-                        <button class="btn btn-primary btn-sm">Send Friend Request</button>
+            @foreach ($users as $user)
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body text-center">
+                            <a style="text-decoration: none"
+                                href="{{ route('site.profile', ['user_id' => $user->id]) }}">
+                                <img src="{{ get_file_url($user->image) }}" alt="User" class="rounded-circle mb-3"
+                                    style="width: 100px; height: 100px;">
+                                <h5 class="card-title">{{ $user->name }}</h5>
+                            </a>
+                            <form action="{{route('site.connections.store')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="friend_id" value="{{ $user->id }}">
+                                <button class="btn btn-primary btn-sm">Send Friend Request</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
 
-            <!-- مستخدم 3 -->
-            <div class="col-md-4 mb-4">
-                <div class="card bg-dark text-white">
-                    <div class="card-body text-center">
-                        <img src="https://via.placeholder.com/100" alt="User" class="rounded-circle mb-3"
-                            style="width: 100px; height: 100px;">
-                        <h5 class="card-title">Alice Brown</h5>
-                        <button class="btn btn-primary btn-sm">Send Friend Request</button>
-                    </div>
-                </div>
-            </div>
         </div>
+        <nav class="mt-5" aria-label="navigation">
+            <ul class="pagination justify-content-center">
+                <div class="card-footer clearfix">
+                    {{ $users->links() }}
+                </div>
+            </ul>
+        </nav>
     </div>
 @endsection

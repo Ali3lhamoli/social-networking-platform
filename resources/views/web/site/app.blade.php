@@ -18,6 +18,7 @@
 
     </div>
     <!-- ./wrapper -->
+    @stack('scripts')
     @include('web.site.layouts.scripts')
 
 </body>

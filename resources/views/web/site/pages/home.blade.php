@@ -32,68 +32,55 @@
         button {
             margin-top: 10px;
         }
+
+        #loading {
+            text-align: center;
+            display: none;
+        }
     </style>
 @endpush
+
 @section('content')
     <div class="container my-5">
-        <!-- صندوق إنشاء بوست جديد -->
-        <div class="card text-white mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Create a New Post</h5>
-                <form enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <textarea class="form-control bg-dark text-white" rows="3" placeholder="What's on your mind?"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="postImage" class="form-label">Upload an image (optional):</label>
-                        <input class="form-control bg-dark text-white" type="file" id="postImage" accept="image/*">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Post</button>
-                </form>
-            </div>
+        <div id="post-container" class="friend-posts">
+            @include('web.site.partials.posts', ['posts' => $posts])
         </div>
-
-        <!-- منشورات الأصدقاء -->
-        <div class="friend-posts">
-            <!-- بوست 1 -->
-            <div class="card text-white mb-3">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="https://via.placeholder.com/50" alt="User" class="rounded-circle me-3">
-                        <div>
-                            <h6 class="mb-0">John Doe</h6>
-                            <small class="text-muted">5 minutes ago</small>
-                        </div>
-                    </div>
-                    <p class="card-text">This is a static post content for testing. It looks great! Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Nam, officia placeat quod fugit illo, sapiente quaerat non dolore
-                        adipisci distinctio et explicabo, nulla natus error velit blanditiis iusto laborum dolorum?</p>
-                    <img src="https://via.placeholder.com/400x200" alt="Post Image" class="img-fluid rounded mb-3">
-                    <div class="d-flex">
-                        <button class="btn btn-sm btn-outline-light me-2">Like</button>
-                        <button class="btn btn-sm btn-outline-light">Comment</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- بوست 2 -->
-            <div class="card text-white mb-3">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="https://via.placeholder.com/50" alt="User" class="rounded-circle me-3">
-                        <div>
-                            <h6 class="mb-0">Jane Smith</h6>
-                            <small class="text-muted">1 hour ago</small>
-                        </div>
-                    </div>
-                    <p class="card-text">Another static post. Modify this content as needed.</p>
-                    <img src="https://via.placeholder.com/400x200" alt="Post Image" class="img-fluid rounded mb-3">
-                    <div class="d-flex">
-                        <button class="btn btn-sm btn-outline-light me-2">Like</button>
-                        <button class="btn btn-sm btn-outline-light">Comment</button>
-                    </div>
-                </div>
-            </div>
+        <div id="loading">
+            <p>Loading...</p>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        let page = 2;  
+        let loading = false;
+
+        function loadMorePosts() {
+            if (loading) return;
+
+            loading = true;
+            document.getElementById('loading').style.display = 'block';
+
+            fetch(`{{ route('site.posts.fetch') }}?page=${page}`)
+                .then(response => response.text())
+                .then(html => {
+                    const container = document.getElementById('post-container');
+                    container.insertAdjacentHTML('beforeend', html);
+                    page++;
+                    loading = false;
+                    document.getElementById('loading').style.display = 'none';
+                })
+                .catch(() => {
+                    loading = false;
+                    document.getElementById('loading').style.display = 'none';
+                });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                loadMorePosts();
+            }
+        });
+    </script>
+@endpush
