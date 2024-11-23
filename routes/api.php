@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CommentController;
+use App\Http\Controllers\API\ConnectionController;
+use App\Http\Controllers\API\LikeController;
+use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,13 +20,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('/register', 'register')->name('user.register');
     Route::post('/login', 'login')->name('user.login');
     Route::post('/logout', 'logout')->name('user.logout')->middleware('auth:sanctum');
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('profiles', ProfileController::class)->except('store');
+    Route::apiResource('posts', PostController::class);
+    Route::apiResource('comments', CommentController::class);
+    Route::apiResource('likes', LikeController::class);
+    Route::apiResource('connections', ConnectionController::class);
 });
