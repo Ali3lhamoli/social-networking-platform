@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
-use App\Models\Connection;
 use App\Models\User;
+use App\Models\Connection;
 use Illuminate\Http\Request;
+use App\Events\NewNotification;
+use App\Http\Controllers\Controller;
 
 class ConnectionController extends Controller
 {
@@ -53,6 +54,13 @@ class ConnectionController extends Controller
             'user_id' => auth()->id(),
             'friend_id' => $request->friend_id,
         ]);
+        $notificationData = [
+            'user_id' => $request->friend_id,
+            'type' => 'friend_request',
+            'message' => 'You have a new friend request!',
+        ];
+        event(new NewNotification($notificationData));
+
         return redirect()->back();
     }
 
