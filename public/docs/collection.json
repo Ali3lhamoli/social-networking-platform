@@ -1,0 +1,1115 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "API Documentation",
+        "_postman_id": "3e14ca65-2c18-4eec-9d31-cf00e7bff65c",
+        "description": "Documentation for my Laravel API",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "description": "",
+            "item": [
+                {
+                    "name": "User registration\n\nThis endpoint allows a user to register by providing their name, email, and password.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Ali Alhamoli\",\"email\":\"ali@example.com\",\"password\":\"password123\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"token\": \"some-jwt-token\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Ali\",\n    \"email\": \"ali@example.com\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"error\": {\n    \"name\": [\"The name field is required.\"],\n    \"email\": [\"The email field is required.\"],\n    \"password\": [\"The password field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "User login\n\nThis endpoint allows a user to log in by providing their email and password.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"ali@example.com\",\"password\":\"password123\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"token\": \"some-jwt-token\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Ali\",\n    \"email\": \"ali@example.com\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"message\": \"Invalid credentials\"\n}",
+                            "name": "invalid credentials"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"error\": {\n    \"email\": [\"The email field is required.\"],\n    \"password\": [\"The password field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "User logout\n\nThis endpoint allows a user to log out by deleting their current authentication token.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"message\": \"Logged out\"\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"message\": \"Failed to logout\"\n}",
+                            "name": "failed to logout"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Comment Management",
+            "description": "",
+            "item": [
+                {
+                    "name": "Create a new comment\n\nThis endpoint allows a user to create a comment on a post.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/comments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/comments"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"content\":\"\\\"Great post!\\\"\",\"user_id\":1,\"post_id\":10}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Comment created successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"content\": \"Great post!\",\n    \"user_id\": 1,\n    \"post_id\": 10,\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T10:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": {\n    \"content\": [\"The content field is required.\"],\n    \"user_id\": [\"The user_id field is required.\"],\n    \"post_id\": [\"The post_id field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "Show a specific comment\n\nThis endpoint retrieves the details of a specific comment.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/comments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/comments\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the comment."
+                                },
+                                {
+                                    "id": "comment",
+                                    "key": "comment",
+                                    "value": "1",
+                                    "description": "The ID of the comment."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"content\": \"Great post!\",\n    \"user_id\": 1,\n    \"post_id\": 10,\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T10:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Comment not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a specific comment\n\nThis endpoint allows a user to update a specific comment.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/comments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/comments\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the comment."
+                                },
+                                {
+                                    "id": "comment",
+                                    "key": "comment",
+                                    "value": "1",
+                                    "description": "The ID of the comment."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"content\":\"\\\"Updated comment content.\\\"\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Comment updated successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"content\": \"Updated comment content.\",\n    \"user_id\": 1,\n    \"post_id\": 10,\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T12:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": {\n    \"content\": [\"The content field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete a specific comment\n\nThis endpoint allows a user to delete a specific comment.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/comments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/comments\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the comment."
+                                },
+                                {
+                                    "id": "comment",
+                                    "key": "comment",
+                                    "value": "1",
+                                    "description": "The ID of the comment."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Comment deleted successfully\"\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Comment not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Connection Management",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get all connections for a user\n\nThis endpoint retrieves all connections (friend requests) for a specific user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/connections",
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1",
+                                    "description": "The ID of the user.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/connections?user_id=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"user_id\": 1,\n      \"friend_id\": 2,\n      \"status\": \"pending\",\n      \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n      \"updated_at\": \"2024-11-23T12:00:00.000000Z\"\n    }\n  ]\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"No data found\"\n}",
+                            "name": "no data found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create a new connection\n\nThis endpoint creates a new connection (friend request) between two users.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/connections",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/connections"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"user_id\":1,\"friend_id\":2}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Connection created successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"friend_id\": 2,\n    \"status\": \"pending\",\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T10:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": {\n    \"user_id\": [\"The user_id field is required.\"],\n    \"friend_id\": [\"The friend_id field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "Show a specific connection\n\nThis endpoint retrieves the details of a specific connection.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/connections\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/connections\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the connection."
+                                },
+                                {
+                                    "id": "connection",
+                                    "key": "connection",
+                                    "value": "1",
+                                    "description": "The ID of the connection."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"friend_id\": 2,\n    \"status\": \"pending\",\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T10:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Connection not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the status of a connection\n\nThis endpoint updates the status of a specific connection (e.g., accepting the friend request).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/connections\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/connections\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the connection."
+                                },
+                                {
+                                    "id": "connection",
+                                    "key": "connection",
+                                    "value": "1",
+                                    "description": "The ID of the connection."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"user_id\":1,\"friend_id\":2,\"status\":\"accepted\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Connection updated successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"friend_id\": 2,\n    \"status\": \"accepted\",\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T12:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": {\n    \"status\": [\"The status field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete a specific connection\n\nThis endpoint deletes a specific connection (friendship).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/connections\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/connections\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the connection."
+                                },
+                                {
+                                    "id": "connection",
+                                    "key": "connection",
+                                    "value": "1",
+                                    "description": "The ID of the connection."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Connection deleted successfully\"\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Connection not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Like Management",
+            "description": "",
+            "item": [
+                {
+                    "name": "Add a like\n\nThis endpoint adds a like to a specific post by a specific user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/likes",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/likes"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"user_id\":1,\"post_id\":10}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"like created successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"post_id\": 10,\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T10:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": {\n    \"user_id\": [\"The user_id field is required.\"],\n    \"post_id\": [\"The post_id field is required.\"]\n  }\n}",
+                            "name": "validation failed"
+                        }
+                    ]
+                },
+                {
+                    "name": "Show a like\n\nThis endpoint retrieves details of a specific like.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/likes\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/likes\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the like."
+                                },
+                                {
+                                    "id": "like",
+                                    "key": "like",
+                                    "value": "1",
+                                    "description": "The ID of the like."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"post_id\": 10,\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T10:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"like not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete a like\n\nThis endpoint deletes a specific like.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/likes\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/likes\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the like."
+                                },
+                                {
+                                    "id": "like",
+                                    "key": "like",
+                                    "value": "1",
+                                    "description": "The ID of the like."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"like deleted successfully\"\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"like not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Post Management",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get all posts\n\nThis endpoint retrieves all posts along with their related users, likes, and comments.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/posts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/posts"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"content\": \"This is a sample post\",\n      \"user_id\": 1,\n      \"image\": \"storage\/posts\/sample.jpg\",\n      \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n      \"updated_at\": \"2024-11-23T12:00:00.000000Z\",\n      \"user\": {\n        \"id\": 1,\n        \"name\": \"Ali\"\n      },\n      \"likes\": [],\n      \"comments\": []\n    }\n  ]\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Show a specific post\n\nThis endpoint retrieves the details of a specific post along with its related data.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/posts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/posts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the post."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"content\": \"This is a sample post\",\n    \"user_id\": 1,\n    \"image\": \"storage\/posts\/sample.jpg\",\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T12:00:00.000000Z\",\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Ali\"\n    },\n    \"likes\": [],\n    \"comments\": []\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Post not found\"\n}",
+                            "name": "not found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete a specific post\n\nThis endpoint deletes a specific post.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/posts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/posts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the post."
+                                },
+                                {
+                                    "id": "post",
+                                    "key": "post",
+                                    "value": "1",
+                                    "description": "The ID of the post."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Post deleted successfully\"\n}",
+                            "name": "success"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Profile Management",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get all profiles\n\nThis endpoint retrieves a list of all user profiles.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/profiles",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/profiles"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Ali\",\n      \"email\": \"ali@example.com\",\n      \"bio\": \"Laravel Developer\",\n      \"image\": \"storage\/users\/example.jpg\",\n      \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n      \"updated_at\": \"2024-11-23T12:00:00.000000Z\"\n    }\n  ]\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"No data found\"\n}",
+                            "name": "no data found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Show a specific profile\n\nThis endpoint retrieves details of a specific user profile.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/profiles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/profiles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the profile."
+                                },
+                                {
+                                    "id": "profile",
+                                    "key": "profile",
+                                    "value": "1",
+                                    "description": "The ID of the profile."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Ali\",\n    \"email\": \"ali@example.com\",\n    \"bio\": \"Laravel Developer\",\n    \"image\": \"storage\/users\/example.jpg\",\n    \"created_at\": \"2024-11-23T10:00:00.000000Z\",\n    \"updated_at\": \"2024-11-23T12:00:00.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"User not found\"\n}",
+                            "name": "user not found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete a specific profile\n\nThis endpoint deletes a specific user profile.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/profiles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/profiles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the profile."
+                                },
+                                {
+                                    "id": "profile",
+                                    "key": "profile",
+                                    "value": "1",
+                                    "description": "The ID of the profile."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"User deleted successfully\"\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"User not found\"\n}",
+                            "name": "user not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "apikey",
+        "apikey": [
+            {
+                "key": "in",
+                "value": "header",
+                "type": "string"
+            },
+            {
+                "key": "key",
+                "value": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}

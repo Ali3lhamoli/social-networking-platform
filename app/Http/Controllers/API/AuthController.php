@@ -10,6 +10,33 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * @group Authentication
+     *
+     * User login
+     *
+     * This endpoint allows a user to log in by providing their email and password.
+     *
+     * @bodyParam email string required The user's email address. Example: ali@example.com
+     * @bodyParam password string required The user's password. Example: password123
+     * @response 200 scenario="success" {
+     *   "token": "some-jwt-token",
+     *   "user": {
+     *     "id": 1,
+     *     "name": "Ali",
+     *     "email": "ali@example.com"
+     *   }
+     * }
+     * @response 422 scenario="validation failed" {
+     *   "error": {
+     *     "email": ["The email field is required."],
+     *     "password": ["The password field is required."]
+     *   }
+     * }
+     * @response 401 scenario="invalid credentials" {
+     *   "message": "Invalid credentials"
+     * }
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -32,7 +59,32 @@ class AuthController extends Controller
         ], 200);
     }
 
-
+    /**
+     * @group Authentication
+     *
+     * User registration
+     *
+     * This endpoint allows a user to register by providing their name, email, and password.
+     *
+     * @bodyParam name string required The user's full name. Example: Ali Alhamoli
+     * @bodyParam email string required The user's email address. Example: ali@example.com
+     * @bodyParam password string required The user's password. Example: password123
+     * @response 200 scenario="success" {
+     *   "token": "some-jwt-token",
+     *   "user": {
+     *     "id": 1,
+     *     "name": "Ali",
+     *     "email": "ali@example.com"
+     *   }
+     * }
+     * @response 422 scenario="validation failed" {
+     *   "error": {
+     *     "name": ["The name field is required."],
+     *     "email": ["The email field is required."],
+     *     "password": ["The password field is required."]
+     *   }
+     * }
+     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -55,13 +107,25 @@ class AuthController extends Controller
         ], 200);
     }
 
-
-    public function logout(Request $request) {
-        if($request->user()->currentAccessToken()->delete()){
+    /**
+     * @group Authentication
+     *
+     * User logout
+     *
+     * This endpoint allows a user to log out by deleting their current authentication token.
+     *
+     * @response 200 scenario="success" {
+     *   "message": "Logged out"
+     * }
+     * @response 401 scenario="failed to logout" {
+     *   "message": "Failed to logout"
+     * }
+     */
+    public function logout(Request $request)
+    {
+        if ($request->user()->currentAccessToken()->delete()) {
             return response()->json(['message' => 'Logged out'], 200);
         }
         return response()->json(['message' => 'Failed to logout'], 401);
     }
-
-
 }

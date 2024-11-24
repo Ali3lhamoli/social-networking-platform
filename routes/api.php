@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+Route::get('docs', function () {
+    return response()->file(public_path('docs/index.html'));
+});
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('/register', 'register')->name('user.register');

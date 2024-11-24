@@ -1,0 +1,203 @@
+name: 'Post Management'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/posts
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Get all posts
+
+        This endpoint retrieves all posts along with their related users, likes, and comments.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "data": [
+              {
+                "id": 1,
+                "content": "This is a sample post",
+                "user_id": 1,
+                "image": "storage/posts/sample.jpg",
+                "created_at": "2024-11-23T10:00:00.000000Z",
+                "updated_at": "2024-11-23T12:00:00.000000Z",
+                "user": {
+                  "id": 1,
+                  "name": "Ali"
+                },
+                "likes": [],
+                "comments": []
+              }
+            ]
+          }
+        headers: []
+        description: success
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/posts/{id}'
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Show a specific post
+
+        This endpoint retrieves the details of a specific post along with its related data.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "data": {
+              "id": 1,
+              "content": "This is a sample post",
+              "user_id": 1,
+              "image": "storage/posts/sample.jpg",
+              "created_at": "2024-11-23T10:00:00.000000Z",
+              "updated_at": "2024-11-23T12:00:00.000000Z",
+              "user": {
+                "id": 1,
+                "name": "Ali"
+              },
+              "likes": [],
+              "comments": []
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "Post not found"
+          }
+        headers: []
+        description: 'not found'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/posts/{id}'
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Delete a specific post
+
+        This endpoint deletes a specific post.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      post:
+        name: post
+        description: 'The ID of the post.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+      post: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Post deleted successfully"
+          }
+        headers: []
+        description: success
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

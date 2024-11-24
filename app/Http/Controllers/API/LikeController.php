@@ -11,7 +11,32 @@ class LikeController extends Controller
 {
 
     /**
-     * Store a newly created resource in storage.
+     * @group Like Management
+     *
+     * Add a like
+     *
+     * This endpoint adds a like to a specific post by a specific user.
+     *
+     * @bodyParam user_id int required The ID of the user who likes the post. Example: 1
+     * @bodyParam post_id int required The ID of the post to be liked. Example: 10
+     * @response 201 scenario="success" {
+     *   "status": "success",
+     *   "message": "like created successfully",
+     *   "data": {
+     *     "id": 1,
+     *     "user_id": 1,
+     *     "post_id": 10,
+     *     "created_at": "2024-11-23T10:00:00.000000Z",
+     *     "updated_at": "2024-11-23T10:00:00.000000Z"
+     *   }
+     * }
+     * @response 422 scenario="validation failed" {
+     *   "status": "error",
+     *   "message": {
+     *     "user_id": ["The user_id field is required."],
+     *     "post_id": ["The post_id field is required."]
+     *   }
+     * }
      */
     public function store(Request $request)
     {
@@ -29,7 +54,27 @@ class LikeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @group Like Management
+     *
+     * Show a like
+     *
+     * This endpoint retrieves details of a specific like.
+     *
+     * @urlParam like int required The ID of the like. Example: 1
+     * @response 200 scenario="success" {
+     *   "status": "success",
+     *   "data": {
+     *     "id": 1,
+     *     "user_id": 1,
+     *     "post_id": 10,
+     *     "created_at": "2024-11-23T10:00:00.000000Z",
+     *     "updated_at": "2024-11-23T10:00:00.000000Z"
+     *   }
+     * }
+     * @response 404 scenario="not found" {
+     *   "status": "error",
+     *   "message": "like not found"
+     * }
      */
     public function show(Like $like)
     {
@@ -47,8 +92,23 @@ class LikeController extends Controller
     }
 
 
+
     /**
-     * Remove the specified resource from storage.
+     * @group Like Management
+     *
+     * Delete a like
+     *
+     * This endpoint deletes a specific like.
+     *
+     * @urlParam like int required The ID of the like. Example: 1
+     * @response 200 scenario="success" {
+     *   "status": "success",
+     *   "message": "like deleted successfully"
+     * }
+     * @response 404 scenario="not found" {
+     *   "status": "error",
+     *   "message": "like not found"
+     * }
      */
     public function destroy(Like $like)
     {

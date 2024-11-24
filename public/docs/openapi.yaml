@@ -1,0 +1,1663 @@
+openapi: 3.0.3
+info:
+  title: 'API Documentation'
+  description: 'Documentation for my Laravel API'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/register:
+    post:
+      summary: "User registration\n\nThis endpoint allows a user to register by providing their name, email, and password."
+      operationId: userRegistrationThisEndpointAllowsAUserToRegisterByProvidingTheirNameEmailAndPassword
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  token: some-jwt-token
+                  user:
+                    id: 1
+                    name: Ali
+                    email: ali@example.com
+                properties:
+                  token:
+                    type: string
+                    example: some-jwt-token
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Ali
+                      email:
+                        type: string
+                        example: ali@example.com
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    name:
+                      - 'The name field is required.'
+                    email:
+                      - 'The email field is required.'
+                    password:
+                      - 'The password field is required.'
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        example:
+                          - 'The name field is required.'
+                        items:
+                          type: string
+                      email:
+                        type: array
+                        example:
+                          - 'The email field is required.'
+                        items:
+                          type: string
+                      password:
+                        type: array
+                        example:
+                          - 'The password field is required.'
+                        items:
+                          type: string
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "The user's full name."
+                  example: 'Ali Alhamoli'
+                  nullable: false
+                email:
+                  type: string
+                  description: "The user's email address."
+                  example: ali@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: "The user's password."
+                  example: password123
+                  nullable: false
+              required:
+                - name
+                - email
+                - password
+      security: []
+  /api/login:
+    post:
+      summary: "User login\n\nThis endpoint allows a user to log in by providing their email and password."
+      operationId: userLoginThisEndpointAllowsAUserToLogInByProvidingTheirEmailAndPassword
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  token: some-jwt-token
+                  user:
+                    id: 1
+                    name: Ali
+                    email: ali@example.com
+                properties:
+                  token:
+                    type: string
+                    example: some-jwt-token
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Ali
+                      email:
+                        type: string
+                        example: ali@example.com
+        401:
+          description: 'invalid credentials'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Invalid credentials'
+                properties:
+                  message:
+                    type: string
+                    example: 'Invalid credentials'
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    email:
+                      - 'The email field is required.'
+                    password:
+                      - 'The password field is required.'
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        example:
+                          - 'The email field is required.'
+                        items:
+                          type: string
+                      password:
+                        type: array
+                        example:
+                          - 'The password field is required.'
+                        items:
+                          type: string
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: "The user's email address."
+                  example: ali@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: "The user's password."
+                  example: password123
+                  nullable: false
+              required:
+                - email
+                - password
+      security: []
+  /api/logout:
+    post:
+      summary: "User logout\n\nThis endpoint allows a user to log out by deleting their current authentication token."
+      operationId: userLogoutThisEndpointAllowsAUserToLogOutByDeletingTheirCurrentAuthenticationToken
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Logged out'
+                properties:
+                  message:
+                    type: string
+                    example: 'Logged out'
+        401:
+          description: 'failed to logout'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Failed to logout'
+                properties:
+                  message:
+                    type: string
+                    example: 'Failed to logout'
+      tags:
+        - Authentication
+      security: []
+  /api/comments:
+    post:
+      summary: "Create a new comment\n\nThis endpoint allows a user to create a comment on a post."
+      operationId: createANewCommentThisEndpointAllowsAUserToCreateACommentOnAPost
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Comment created successfully'
+                  data:
+                    id: 1
+                    content: 'Great post!'
+                    user_id: 1
+                    post_id: 10
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T10:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Comment created successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      content:
+                        type: string
+                        example: 'Great post!'
+                      user_id:
+                        type: integer
+                        example: 1
+                      post_id:
+                        type: integer
+                        example: 10
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    content:
+                      - 'The content field is required.'
+                    user_id:
+                      - 'The user_id field is required.'
+                    post_id:
+                      - 'The post_id field is required.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: object
+                    properties:
+                      content:
+                        type: array
+                        example:
+                          - 'The content field is required.'
+                        items:
+                          type: string
+                      user_id:
+                        type: array
+                        example:
+                          - 'The user_id field is required.'
+                        items:
+                          type: string
+                      post_id:
+                        type: array
+                        example:
+                          - 'The post_id field is required.'
+                        items:
+                          type: string
+      tags:
+        - 'Comment Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'The content of the comment.'
+                  example: '"Great post!"'
+                  nullable: false
+                user_id:
+                  type: integer
+                  description: 'The ID of the user making the comment.'
+                  example: 1
+                  nullable: false
+                post_id:
+                  type: integer
+                  description: 'The ID of the post being commented on.'
+                  example: 10
+                  nullable: false
+              required:
+                - content
+                - user_id
+                - post_id
+      security: []
+  '/api/comments/{id}':
+    get:
+      summary: "Show a specific comment\n\nThis endpoint retrieves the details of a specific comment."
+      operationId: showASpecificCommentThisEndpointRetrievesTheDetailsOfASpecificComment
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    id: 1
+                    content: 'Great post!'
+                    user_id: 1
+                    post_id: 10
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T10:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      content:
+                        type: string
+                        example: 'Great post!'
+                      user_id:
+                        type: integer
+                        example: 1
+                      post_id:
+                        type: integer
+                        example: 10
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Comment not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Comment not found'
+      tags:
+        - 'Comment Management'
+      security: []
+    put:
+      summary: "Update a specific comment\n\nThis endpoint allows a user to update a specific comment."
+      operationId: updateASpecificCommentThisEndpointAllowsAUserToUpdateASpecificComment
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Comment updated successfully'
+                  data:
+                    id: 1
+                    content: 'Updated comment content.'
+                    user_id: 1
+                    post_id: 10
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T12:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Comment updated successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      content:
+                        type: string
+                        example: 'Updated comment content.'
+                      user_id:
+                        type: integer
+                        example: 1
+                      post_id:
+                        type: integer
+                        example: 10
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T12:00:00.000000Z'
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    content:
+                      - 'The content field is required.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: object
+                    properties:
+                      content:
+                        type: array
+                        example:
+                          - 'The content field is required.'
+                        items:
+                          type: string
+      tags:
+        - 'Comment Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'The updated content of the comment.'
+                  example: '"Updated comment content."'
+                  nullable: false
+              required:
+                - content
+      security: []
+    delete:
+      summary: "Delete a specific comment\n\nThis endpoint allows a user to delete a specific comment."
+      operationId: deleteASpecificCommentThisEndpointAllowsAUserToDeleteASpecificComment
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Comment deleted successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Comment deleted successfully'
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Comment not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Comment not found'
+      tags:
+        - 'Comment Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the comment.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: comment
+        description: 'The ID of the comment.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/connections:
+    get:
+      summary: "Get all connections for a user\n\nThis endpoint retrieves all connections (friend requests) for a specific user."
+      operationId: getAllConnectionsForAUserThisEndpointRetrievesAllConnectionsfriendRequestsForASpecificUser
+      description: ''
+      parameters:
+        -
+          in: query
+          name: user_id
+          description: 'The ID of the user.'
+          example: 1
+          required: true
+          schema:
+            type: integer
+            description: 'The ID of the user.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    -
+                      id: 1
+                      user_id: 1
+                      friend_id: 2
+                      status: pending
+                      created_at: '2024-11-23T10:00:00.000000Z'
+                      updated_at: '2024-11-23T12:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        user_id: 1
+                        friend_id: 2
+                        status: pending
+                        created_at: '2024-11-23T10:00:00.000000Z'
+                        updated_at: '2024-11-23T12:00:00.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        user_id:
+                          type: integer
+                          example: 1
+                        friend_id:
+                          type: integer
+                          example: 2
+                        status:
+                          type: string
+                          example: pending
+                        created_at:
+                          type: string
+                          example: '2024-11-23T10:00:00.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2024-11-23T12:00:00.000000Z'
+        404:
+          description: 'no data found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'No data found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'No data found'
+      tags:
+        - 'Connection Management'
+      security: []
+    post:
+      summary: "Create a new connection\n\nThis endpoint creates a new connection (friend request) between two users."
+      operationId: createANewConnectionThisEndpointCreatesANewConnectionfriendRequestBetweenTwoUsers
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Connection created successfully'
+                  data:
+                    id: 1
+                    user_id: 1
+                    friend_id: 2
+                    status: pending
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T10:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Connection created successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      friend_id:
+                        type: integer
+                        example: 2
+                      status:
+                        type: string
+                        example: pending
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    user_id:
+                      - 'The user_id field is required.'
+                    friend_id:
+                      - 'The friend_id field is required.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: object
+                    properties:
+                      user_id:
+                        type: array
+                        example:
+                          - 'The user_id field is required.'
+                        items:
+                          type: string
+                      friend_id:
+                        type: array
+                        example:
+                          - 'The friend_id field is required.'
+                        items:
+                          type: string
+      tags:
+        - 'Connection Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: 'The ID of the user sending the friend request.'
+                  example: 1
+                  nullable: false
+                friend_id:
+                  type: integer
+                  description: 'The ID of the user receiving the friend request.'
+                  example: 2
+                  nullable: false
+              required:
+                - user_id
+                - friend_id
+      security: []
+  '/api/connections/{id}':
+    get:
+      summary: "Show a specific connection\n\nThis endpoint retrieves the details of a specific connection."
+      operationId: showASpecificConnectionThisEndpointRetrievesTheDetailsOfASpecificConnection
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    id: 1
+                    user_id: 1
+                    friend_id: 2
+                    status: pending
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T10:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      friend_id:
+                        type: integer
+                        example: 2
+                      status:
+                        type: string
+                        example: pending
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Connection not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Connection not found'
+      tags:
+        - 'Connection Management'
+      security: []
+    put:
+      summary: "Update the status of a connection\n\nThis endpoint updates the status of a specific connection (e.g., accepting the friend request)."
+      operationId: updateTheStatusOfAConnectionThisEndpointUpdatesTheStatusOfASpecificConnectionegAcceptingTheFriendRequest
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Connection updated successfully'
+                  data:
+                    id: 1
+                    user_id: 1
+                    friend_id: 2
+                    status: accepted
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T12:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Connection updated successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      friend_id:
+                        type: integer
+                        example: 2
+                      status:
+                        type: string
+                        example: accepted
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T12:00:00.000000Z'
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    status:
+                      - 'The status field is required.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: object
+                    properties:
+                      status:
+                        type: array
+                        example:
+                          - 'The status field is required.'
+                        items:
+                          type: string
+      tags:
+        - 'Connection Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: 'The ID of the user.'
+                  example: 1
+                  nullable: false
+                friend_id:
+                  type: integer
+                  description: 'The ID of the friend.'
+                  example: 2
+                  nullable: false
+                status:
+                  type: string
+                  description: 'The status of the connection.'
+                  example: accepted
+                  nullable: false
+              required:
+                - user_id
+                - friend_id
+                - status
+      security: []
+    delete:
+      summary: "Delete a specific connection\n\nThis endpoint deletes a specific connection (friendship)."
+      operationId: deleteASpecificConnectionThisEndpointDeletesASpecificConnectionfriendship
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Connection deleted successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Connection deleted successfully'
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Connection not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Connection not found'
+      tags:
+        - 'Connection Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the connection.'
+        example: 2
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: connection
+        description: 'The ID of the connection.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/likes:
+    post:
+      summary: "Add a like\n\nThis endpoint adds a like to a specific post by a specific user."
+      operationId: addALikeThisEndpointAddsALikeToASpecificPostByASpecificUser
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'like created successfully'
+                  data:
+                    id: 1
+                    user_id: 1
+                    post_id: 10
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T10:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'like created successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      post_id:
+                        type: integer
+                        example: 10
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+        422:
+          description: 'validation failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    user_id:
+                      - 'The user_id field is required.'
+                    post_id:
+                      - 'The post_id field is required.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: object
+                    properties:
+                      user_id:
+                        type: array
+                        example:
+                          - 'The user_id field is required.'
+                        items:
+                          type: string
+                      post_id:
+                        type: array
+                        example:
+                          - 'The post_id field is required.'
+                        items:
+                          type: string
+      tags:
+        - 'Like Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: 'The ID of the user who likes the post.'
+                  example: 1
+                  nullable: false
+                post_id:
+                  type: integer
+                  description: 'The ID of the post to be liked.'
+                  example: 10
+                  nullable: false
+              required:
+                - user_id
+                - post_id
+      security: []
+  '/api/likes/{id}':
+    get:
+      summary: "Show a like\n\nThis endpoint retrieves details of a specific like."
+      operationId: showALikeThisEndpointRetrievesDetailsOfASpecificLike
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    id: 1
+                    user_id: 1
+                    post_id: 10
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T10:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      post_id:
+                        type: integer
+                        example: 10
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'like not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'like not found'
+      tags:
+        - 'Like Management'
+      security: []
+    delete:
+      summary: "Delete a like\n\nThis endpoint deletes a specific like."
+      operationId: deleteALikeThisEndpointDeletesASpecificLike
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'like deleted successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'like deleted successfully'
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'like not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'like not found'
+      tags:
+        - 'Like Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the like.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: like
+        description: 'The ID of the like.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/posts:
+    get:
+      summary: "Get all posts\n\nThis endpoint retrieves all posts along with their related users, likes, and comments."
+      operationId: getAllPostsThisEndpointRetrievesAllPostsAlongWithTheirRelatedUsersLikesAndComments
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    -
+                      id: 1
+                      content: 'This is a sample post'
+                      user_id: 1
+                      image: storage/posts/sample.jpg
+                      created_at: '2024-11-23T10:00:00.000000Z'
+                      updated_at: '2024-11-23T12:00:00.000000Z'
+                      user:
+                        id: 1
+                        name: Ali
+                      likes: []
+                      comments: []
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        content: 'This is a sample post'
+                        user_id: 1
+                        image: storage/posts/sample.jpg
+                        created_at: '2024-11-23T10:00:00.000000Z'
+                        updated_at: '2024-11-23T12:00:00.000000Z'
+                        user:
+                          id: 1
+                          name: Ali
+                        likes: []
+                        comments: []
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        content:
+                          type: string
+                          example: 'This is a sample post'
+                        user_id:
+                          type: integer
+                          example: 1
+                        image:
+                          type: string
+                          example: storage/posts/sample.jpg
+                        created_at:
+                          type: string
+                          example: '2024-11-23T10:00:00.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2024-11-23T12:00:00.000000Z'
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Ali
+                        likes:
+                          type: array
+                          example: []
+                        comments:
+                          type: array
+                          example: []
+      tags:
+        - 'Post Management'
+      security: []
+  '/api/posts/{id}':
+    get:
+      summary: "Show a specific post\n\nThis endpoint retrieves the details of a specific post along with its related data."
+      operationId: showASpecificPostThisEndpointRetrievesTheDetailsOfASpecificPostAlongWithItsRelatedData
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    id: 1
+                    content: 'This is a sample post'
+                    user_id: 1
+                    image: storage/posts/sample.jpg
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T12:00:00.000000Z'
+                    user:
+                      id: 1
+                      name: Ali
+                    likes: []
+                    comments: []
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      content:
+                        type: string
+                        example: 'This is a sample post'
+                      user_id:
+                        type: integer
+                        example: 1
+                      image:
+                        type: string
+                        example: storage/posts/sample.jpg
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T12:00:00.000000Z'
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Ali
+                      likes:
+                        type: array
+                        example: []
+                      comments:
+                        type: array
+                        example: []
+        404:
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Post not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Post not found'
+      tags:
+        - 'Post Management'
+      security: []
+    delete:
+      summary: "Delete a specific post\n\nThis endpoint deletes a specific post."
+      operationId: deleteASpecificPostThisEndpointDeletesASpecificPost
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Post deleted successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Post deleted successfully'
+      tags:
+        - 'Post Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the post.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/profiles:
+    get:
+      summary: "Get all profiles\n\nThis endpoint retrieves a list of all user profiles."
+      operationId: getAllProfilesThisEndpointRetrievesAListOfAllUserProfiles
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    -
+                      id: 1
+                      name: Ali
+                      email: ali@example.com
+                      bio: 'Laravel Developer'
+                      image: storage/users/example.jpg
+                      created_at: '2024-11-23T10:00:00.000000Z'
+                      updated_at: '2024-11-23T12:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: Ali
+                        email: ali@example.com
+                        bio: 'Laravel Developer'
+                        image: storage/users/example.jpg
+                        created_at: '2024-11-23T10:00:00.000000Z'
+                        updated_at: '2024-11-23T12:00:00.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Ali
+                        email:
+                          type: string
+                          example: ali@example.com
+                        bio:
+                          type: string
+                          example: 'Laravel Developer'
+                        image:
+                          type: string
+                          example: storage/users/example.jpg
+                        created_at:
+                          type: string
+                          example: '2024-11-23T10:00:00.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2024-11-23T12:00:00.000000Z'
+        404:
+          description: 'no data found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'No data found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'No data found'
+      tags:
+        - 'Profile Management'
+      security: []
+  '/api/profiles/{id}':
+    get:
+      summary: "Show a specific profile\n\nThis endpoint retrieves details of a specific user profile."
+      operationId: showASpecificProfileThisEndpointRetrievesDetailsOfASpecificUserProfile
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    id: 1
+                    name: Ali
+                    email: ali@example.com
+                    bio: 'Laravel Developer'
+                    image: storage/users/example.jpg
+                    created_at: '2024-11-23T10:00:00.000000Z'
+                    updated_at: '2024-11-23T12:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Ali
+                      email:
+                        type: string
+                        example: ali@example.com
+                      bio:
+                        type: string
+                        example: 'Laravel Developer'
+                      image:
+                        type: string
+                        example: storage/users/example.jpg
+                      created_at:
+                        type: string
+                        example: '2024-11-23T10:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-23T12:00:00.000000Z'
+        404:
+          description: 'user not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'User not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'User not found'
+      tags:
+        - 'Profile Management'
+      security: []
+    delete:
+      summary: "Delete a specific profile\n\nThis endpoint deletes a specific user profile."
+      operationId: deleteASpecificProfileThisEndpointDeletesASpecificUserProfile
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'User deleted successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'User deleted successfully'
+        404:
+          description: 'user not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'User not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'User not found'
+      tags:
+        - 'Profile Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the profile.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: profile
+        description: 'The ID of the profile.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: Authentication
+    description: ''
+  -
+    name: 'Comment Management'
+    description: ''
+  -
+    name: 'Connection Management'
+    description: ''
+  -
+    name: 'Like Management'
+    description: ''
+  -
+    name: 'Post Management'
+    description: ''
+  -
+    name: 'Profile Management'
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []

@@ -1,0 +1,244 @@
+name: 'Like Management'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/likes
+    metadata:
+      groupName: 'Like Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Add a like
+
+        This endpoint adds a like to a specific post by a specific user.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      user_id:
+        name: user_id
+        description: 'The ID of the user who likes the post.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      post_id:
+        name: post_id
+        description: 'The ID of the post to be liked.'
+        required: true
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      user_id: 1
+      post_id: 10
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+            "status": "success",
+            "message": "like created successfully",
+            "data": {
+              "id": 1,
+              "user_id": 1,
+              "post_id": 10,
+              "created_at": "2024-11-23T10:00:00.000000Z",
+              "updated_at": "2024-11-23T10:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+            "status": "error",
+            "message": {
+              "user_id": ["The user_id field is required."],
+              "post_id": ["The post_id field is required."]
+            }
+          }
+        headers: []
+        description: 'validation failed'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/likes/{id}'
+    metadata:
+      groupName: 'Like Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Show a like
+
+        This endpoint retrieves details of a specific like.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the like.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      like:
+        name: like
+        description: 'The ID of the like.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+      like: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "data": {
+              "id": 1,
+              "user_id": 1,
+              "post_id": 10,
+              "created_at": "2024-11-23T10:00:00.000000Z",
+              "updated_at": "2024-11-23T10:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "like not found"
+          }
+        headers: []
+        description: 'not found'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/likes/{id}'
+    metadata:
+      groupName: 'Like Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Delete a like
+
+        This endpoint deletes a specific like.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the like.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      like:
+        name: like
+        description: 'The ID of the like.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+      like: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "like deleted successfully"
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "like not found"
+          }
+        headers: []
+        description: 'not found'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

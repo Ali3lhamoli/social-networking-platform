@@ -23,6 +23,9 @@ use App\Http\Controllers\Site\SettingController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('docs', function () {
+    return response()->file(public_path('docs/index.html'));
+});
 
 
 Route::as('site.')->group(function () {

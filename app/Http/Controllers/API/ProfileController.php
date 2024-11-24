@@ -11,7 +11,30 @@ use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @group Profile Management
+     *
+     * Get all profiles
+     *
+     * This endpoint retrieves a list of all user profiles.
+     *
+     * @response 200 scenario="success" {
+     *   "status": "success",
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "name": "Ali",
+     *       "email": "ali@example.com",
+     *       "bio": "Laravel Developer",
+     *       "image": "storage/users/example.jpg",
+     *       "created_at": "2024-11-23T10:00:00.000000Z",
+     *       "updated_at": "2024-11-23T12:00:00.000000Z"
+     *     }
+     *   ]
+     * }
+     * @response 404 scenario="no data found" {
+     *   "status": "error",
+     *   "message": "No data found"
+     * }
      */
     public function index()
     {
@@ -31,7 +54,29 @@ class ProfileController extends Controller
 
 
     /**
-     * Display the specified resource.
+     * @group Profile Management
+     *
+     * Show a specific profile
+     *
+     * This endpoint retrieves details of a specific user profile.
+     *
+     * @urlParam profile int required The ID of the profile. Example: 1
+     * @response 200 scenario="success" {
+     *   "status": "success",
+     *   "data": {
+     *     "id": 1,
+     *     "name": "Ali",
+     *     "email": "ali@example.com",
+     *     "bio": "Laravel Developer",
+     *     "image": "storage/users/example.jpg",
+     *     "created_at": "2024-11-23T10:00:00.000000Z",
+     *     "updated_at": "2024-11-23T12:00:00.000000Z"
+     *   }
+     * }
+     * @response 404 scenario="user not found" {
+     *   "status": "error",
+     *   "message": "User not found"
+     * }
      */
     public function show(User $profile)
     {
@@ -49,7 +94,42 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @group Profile Management
+     *
+     * Update a specific profile
+     *
+     * This endpoint updates the details of a specific user profile.
+     *
+     * @urlParam profile int required The ID of the profile. Example: 1
+     * @bodyParam name string The name of the user. Example: Ali Updated
+     * @bodyParam email string The email of the user. Example: ali@example.com
+     * @bodyParam bio string The bio of the user. Example: Updated Bio
+     * @bodyParam image file The profile image of the user. Must be a valid image (jpeg, jpg, png, gif, svg). Example: example.jpg
+     * @bodyParam password string The password for the user. Example: secret123
+     * @response 200 scenario="success" {
+     *   "status": "success",
+     *   "data": {
+     *     "id": 1,
+     *     "name": "Ali Updated",
+     *     "email": "ali@example.com",
+     *     "bio": "Updated Bio",
+     *     "image": "storage/users/updated.jpg",
+     *     "created_at": "2024-11-23T10:00:00.000000Z",
+     *     "updated_at": "2024-11-23T12:30:00.000000Z"
+     *   },
+     *   "message": "User updated successfully"
+     * }
+     * @response 404 scenario="user not found" {
+     *   "status": "error",
+     *   "message": "User not found"
+     * }
+     * @response 422 scenario="validation failed" {
+     *   "status": "error",
+     *   "message": {
+     *     "name": ["The name field is required."],
+     *     "email": ["The email must be a valid email address."]
+     *   }
+     * }
      */
     public function update(Request $request, User $profile)
     {
@@ -98,7 +178,21 @@ class ProfileController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @group Profile Management
+     *
+     * Delete a specific profile
+     *
+     * This endpoint deletes a specific user profile.
+     *
+     * @urlParam profile int required The ID of the profile. Example: 1
+     * @response 200 scenario="success" {
+     *   "status": "success",
+     *   "message": "User deleted successfully"
+     * }
+     * @response 404 scenario="user not found" {
+     *   "status": "error",
+     *   "message": "User not found"
+     * }
      */
     public function destroy(User $profile)
     {
