@@ -68,7 +68,7 @@
                         </a>
                         <p class="card-text">{{ $post->content }}</p>
                         @if ($post->image)
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image"
+                            <img src="{{ get_file_url($post->image) }}" alt="Post Image"
                                 class="img-fluid rounded mb-3">
                         @endif
                         <div class="d-flex">
